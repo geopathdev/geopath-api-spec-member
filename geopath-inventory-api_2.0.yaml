@@ -1,0 +1,516 @@
+swagger: '2.0'
+x-api-id: geopath-insights-inventory-api
+info:
+  version: 0.0.1
+  title: Geopath Insights Inventory API
+  description: >-
+    The inventory API provides operations to search and retrieve member inventory. Related information includes the construction, frame, places, faces, photos and spots.
+  contact:
+    email: apisupport@geopath.org
+  license:
+    name: Geopath API License Agreement
+host: api.geopath.org
+basePath: /v2
+schemes:
+- https
+tags:
+- name: Inventory
+  description: Physical assets owned and operated by Geopath members.
+securityDefinitions:
+  geo_insights_auth:
+    type: apiKey
+    in: header
+    name: Geopath-API-Key
+paths:
+  '/inventory/{geopath_id}':
+    get:
+      tags:
+      - Inventory
+      summary: Inventory Details by Geopath ID
+      description: >-
+        The inventory details path allows members to retrieve details about an inventory item using the ID assigned by Geopath.
+      operationId: getInventoryByGeopathId
+      security:
+      - geo_insights_auth: []
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: header
+        name: Content-Type
+        type: string
+        description: Format expected by the service.
+        default: application/json
+      - in: path
+        name: geopath_id
+        description: Geopath inventory ID
+        required: true
+        type: integer
+        format: int64
+        x-example: 30729207
+      responses:
+        '200':
+          description: Detailed information for a particular Geopath ID
+          schema:
+            $ref: '#/definitions/inventory_detail_response'
+        '400':
+          description: Unable to find the inventory item for this Geopath ID.
+          schema:
+            $ref: '#/definitions/InsightsError'
+  /inventory/search:
+    post:
+      tags:
+      - Inventory
+      summary: Search Inventory by operators, media type, markets, region or list of Geopath IDs
+      description: |
+        The inventory search path allows members to search across the inventory they have listed with Geopath.
+      operationId: searchInventory
+      security:
+      - geo_insights_auth: []
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      - application/csv
+      parameters:
+      - in: header
+        name: Content-Type
+        type: string
+        description: Format expected by the service.
+        default: application/json
+      - in: body
+        name: body
+        description: The search criteria that describes the requested inventory.
+        required: true
+        schema:
+          $ref: '#/definitions/inventory_request'
+      responses:
+        '200':
+          description: Successful Operation
+          schema:
+            $ref: '#/definitions/inventory_summary_response'
+        '400':
+          description: Unable to search the inventory with the provided criteria.
+          schema:
+            $ref: '#/definitions/InsightsError'
+definitions:
+  InsightsError:
+    properties:
+      reason:
+        type: string
+      name:
+        type: string
+      message:
+        type: string
+  inventory_detail_response:
+    type: object
+    properties:
+      _id:
+        type: string
+      frame:
+        $ref: '#/definitions/frame'
+  frame:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      illuminationStartTime:
+        type: string
+      illuminationEndTime:
+        type: string
+      maxHeight:
+        type: integer
+      maxWidth:
+        type: integer
+      maxPixelHeight:
+        type: integer
+      maxPixelWidth:
+        type: integer
+      constructionDate:
+        type: string
+      description:
+        type: string
+      fullMotion:
+        type: boolean
+      partialMotion:
+        type: boolean
+      rotating:
+        type: boolean
+      interactive:
+        type: boolean
+      audio:
+        type: boolean
+      digital:
+        type: boolean
+      mediaName:
+        type: string
+      createdDtm:
+        type: string
+      updatedDtm:
+        type: string
+      classificationType:
+        $ref: '#/definitions/classification_type'
+      construction:
+        $ref: '#/definitions/construction'
+      illuminationType:
+        $ref: '#/definitions/illumination_type'
+      location:
+        $ref: '#/definitions/location'
+      mediaType:
+        $ref: '#/definitions/media_type'
+      placementType:
+        $ref: '#/definitions/placement_type'
+      statusType:
+        $ref: '#/definitions/status_type'
+      photos:
+        type: array
+        items:
+          $ref: '#/definitions/photo'
+  classification_type:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      description:
+        type: string
+  construction:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+      description:
+        type: string
+      createdDtm:
+        type: string
+      updatedDtm:
+        type: string
+      constructionType:
+        $ref: '#/definitions/construction_type'
+      place:
+        $ref: '#/definitions/place'
+      operatingHours:
+        type: array
+        items:
+          $ref: '#/definitions/operating_hours'
+  construction_type:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      description:
+        type: string
+  division:
+    type: object
+    properties:
+      id:
+        description: The id of the division
+        type: integer
+        format: int64
+      name:
+        description: The name of the division
+        type: string
+      plant:
+        description: As described by [plant](#plant)
+        $ref: '#/definitions/plant'
+  illumination_type:
+    type: object
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+  location:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      orientation:
+        type: integer
+        format: int16
+      primaryRead:
+        type: string
+      primaryArtery:
+        type: string
+      level:
+        type: integer
+        format: int16
+      levelsVisible:
+        type: string
+      latitude:
+        type: number
+      longitude:
+        type: number
+      blockId:
+        type: string
+      elevation:
+        type: integer
+        format: int16
+      frameInLocationDtm:
+        type: string
+      geometry:
+        $ref: '#/definitions/geometry'
+      createdDtm:
+        type: string
+      updatedDtm:
+        type: string
+      dmaId:
+        type: string
+      zipCode:
+        type: string
+  place:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      location:
+        $ref: '#/definitions/location'
+      placeType:
+        $ref: '#/definitions/place_type'
+      herePlaceId:
+        type: string
+      transferStation:
+        type: boolean
+      streetAddress:
+        type: string
+      city:
+        type: string
+      state:
+        type: string
+      zipCode:
+        type: string
+      name:
+        type: string
+      createdDtm:
+        type: string
+      updatedDtm:
+        type: string
+  place_type:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      description:
+        type: string
+  plant:
+    type: object
+    properties:
+      id:
+        description: The id of the plant
+        type: integer
+        format: int64
+      name:
+        description: The name of the plant
+        type: string
+  media_type:
+    type: object
+    properties:
+      id:
+        description: The id of the media type
+        type: integer
+      name:
+        description: The name of the media type
+        type: string
+      description:
+        description: The description of the media type
+        type: string
+  placement_type:
+    type: object
+    properties:
+      id:
+        description: The id of the placement type
+        type: integer
+      name:
+        description: The name of the placement type
+        type: string
+      description:
+        description: The description of the placement type
+        type: string
+  representation:
+    type: object
+    properties:
+      representationType:
+        description: As described by [representation type](#representation_type)
+        $ref: '#/definitions/representation_type'
+      division:
+        description: As described by [division](#division)
+        $ref: '#/definitions/division'
+  representation_type:
+    type: object
+    properties:
+      id:
+        description: The id of the representation type
+        type: integer
+      name:
+        description: The name of the representation type
+        type: string
+  status_type:
+    type: object
+    properties:
+      id:
+        description: The id of the status type
+        type: integer
+      name:
+        description: The name of the status type
+        type: string
+      description:
+        description: The description of the status type
+        type: string
+  photo:
+    type: object
+    properties:
+      defaultPhoto:
+        type: boolean
+      uri:
+        type: string
+      createdDtm:
+        type: string
+      updatedDtm:
+        type: string
+  operating_hours:
+    type: object
+    properties:
+      days:
+        type: string
+      startTime:
+        type: string
+      endTime:
+        type: string
+  inventory_request:
+    type: object
+    properties:
+      audience:
+        type: string
+      base:
+        type: string
+      operatorList:
+        description: Restrict results to a set of owners by their system identifiers.
+        type: array
+        items:
+          type: string
+      operatorNames:
+        description: Restrict results to a set of inventory owners by their names.
+        type: array
+        items:
+          type: string
+      sort:
+        description: Atttribute for sorting.  Valid value - mediaType.
+        type: string
+      marketType:
+        type: string
+      marketList:
+        type: array
+        items:
+          type: string
+      region:
+        type: object
+      idType:
+        type: string
+      idList:
+        type: array
+        items:
+          type: integer
+          format: int64
+      mediaTypeList:
+        description: Filter results to a particular set of media types.
+        type: array
+        items:
+          type: string
+      page:
+        description: >-
+          Specifies which page to return when the number of results exceeds
+          pageSize.  Will return an empty list if the combination of page and
+          pageSize extends past the total number of records available.
+        type: integer
+      pageSize:
+        description: >-
+          Maximum number of results to return in a given request.  Limited to
+          100.  If a larger number of records is requested, this limit is
+          imposed instead.  This parameter is also ignored if less than or
+          equal to 0.
+        type: integer
+      audienceMarket:
+        type: string
+  inventory_summary_response:
+    type: object
+    properties:
+      _id:
+        type: string
+      inventorySummary:
+        $ref: '#/definitions/inventory_summary'
+  inventory_summary:
+    type: object
+    properties:
+      inventoryCount:
+        description: The number of inventories returned
+        type: integer
+      inventoryItems:
+        description: The inventories matching the search criteria
+        type: array
+        items:
+          $ref: '#/definitions/inventory'
+  inventory:
+    properties:
+      geopathId:
+        description: The Geopath assigned frame id
+        type: integer
+        format: int64
+      plantFrameId:
+        description: The frame unit id provided by media owner
+        type: string
+      uri:
+        description: The uri to get the inventory details
+        type: string
+      representations:
+        description: The representations associated with the inventory
+        type: array
+        items:
+          $ref: '#/definitions/representation'
+      mediaType:
+        description: As described by [media type](#media_type)
+        $ref: '#/definitions/media_type'
+      mediaStatus:
+        description: As described by [status type](#status_type)
+        $ref: '#/definitions/status_type'
+      location:
+        description: The location of the inventory
+        type: object
+        properties:
+          id:
+            description: The id of the location
+            type: integer
+            format: int64
+          geometry:
+            description: The location coordinates as described by [geometry](#geometry)
+            $ref: '#/definitions/geometry'
+  geometry:
+    type: object
+    properties:
+      type:
+        type: string
+        enum:
+        - Point
+        - LineString
+        - Polygon
+        - MultiPoint
+        - MultiLineString
+        - MultiPolygon
+      coordinates:
+        type: array
+        maxItems: 2
+        minItems: 2
+        items:
+          type: number
+          format: double
