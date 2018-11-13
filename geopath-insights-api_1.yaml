@@ -1,0 +1,3733 @@
+swagger: '2.0'
+x-api-id: geo-insights-api
+info:
+  version: 0.0.1
+  title: geo-insights-api
+paths:
+  /audience:
+    get:
+      description: 'Gets the audience information of a set of panels for multiple dayparts and multiple demographics. If the inventory is not clean (both vehicular and pedestrian home mappings have not been validated), a value of -1 is returned in the measures structure. If the inventory is missing any other information, a value of -2 is returned. If only the vehicular mapping is good, it will be used to calculate the measures returned.'
+      operationId: getAudience
+      tags:
+        - Audience
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: daypart_ids
+          type: string
+          description: Comma-separated list of daypart IDs.
+          required: true
+        - in: query
+          name: demo_ids
+          type: string
+          description: Comma-separated list of demo IDs. Either this or custom_demo_ids must be provided.
+        - in: query
+          name: custom_demo_ids
+          type: string
+          description: Comma-separated list of custom demo IDs. Either this or demo_ids must be provided.
+        - in: query
+          name: panel_ids
+          type: string
+          description: Comma-separated list of panel IDs.
+          required: true
+        - in: query
+          name: market_id
+          type: string
+          description: Market ID to get information for.
+          required: true
+        - in: query
+          name: population_base
+          type: string
+          enum:
+            - 0
+            - 5
+            - 18
+            - 21
+          description: Base population.
+          required: true
+      responses:
+        '200':
+          description: ''
+          examples:
+            application/json:
+              custom_demos:
+                - id: 37c01eb4-12fb-489d-ba0b-4d2ee93c6472
+                  name: A18+
+                  age_min: 18
+                  age_max: null
+                  hhinc_min: null
+                  hhinc_max: null
+                  races: null
+                  sex: null
+                  employed: null
+                  user_id: auth0|5991e891d43c5e5ff0d7288a
+                  company_id: null
+              dayparts:
+                - id: d23241ee-ee25-4ef9-a27a-391ce5b83169
+                  name: Average Weekly Audience
+                  description: Audience for the entire week.
+                  start_hour: 0
+                  end_hour: 23
+                  days:
+                    - 1
+                    - 2
+                    - 3
+                    - 4
+                    - 5
+                    - 6
+                    - 7
+                  user_id: null
+                  company_id: null
+                  created_at: '2017-10-02T16:28:36.669968Z'
+                  updated_at: '2017-10-02T16:28:36.669968Z'
+              demos:
+                - id: 867104db-e0bf-4825-9e66-dd93df5e4f06
+                  source_demo_id: b01001e2
+                  name: Total Population
+                  description: Total Population (source)
+                  percent_base: b01001e1
+                  true_percent_base: b01001e1
+                  year: 2016
+                  demo_subcategory_id: f502801f-a507-48fc-9567-9ac63c112c7d
+                  demo_subcategory: null
+              market:
+                id: 321f8d39-1ba4-4dc4-b80d-2dfdb3b6aed2
+                source_market_id: 602
+                name: 'Chicago, IL'
+                type: DMA
+                market_type: null
+                location_id: ''
+                location: null
+                created_at: '2017-09-21T18:08:02.649748Z'
+                updated_at: '2017-09-21T18:08:02.649748Z'
+                panels: null
+                counties: null
+                census_tracts: null
+                zip_codes: null
+                precalc_int_id: 172
+                cached: true
+              measures:
+                - demo_id: 867104db-e0bf-4825-9e66-dd93df5e4f06
+                  custom_demo_id: null
+                  panel_id: 66633aaf-93f5-dd11-bfe8-001ec9ace3ee
+                  daypart_id: d23241ee-ee25-4ef9-a27a-391ce5b83169
+                  composition_percentage: 0.9000376109433036
+                  composition_index: 76.47878006184848
+                  ad_play_in_market_impressions: null
+                  structure_in_market_impressions: 6581.884195749979
+                  ad_play_total_impressions: null
+                  structure_total_impressions: 6812.119542164592
+                  ad_play_in_market_ratings: null
+                  structure_in_market_ratings: 0.08067753691419788
+                  demographic_population: 8158261.205656217
+                - demo_id: null
+                  custom_demo_id: 37c01eb4-12fb-489d-ba0b-4d2ee93c6472
+                  panel_id: 66633aaf-93f5-dd11-bfe8-001ec9ace3ee
+                  daypart_id: d23241ee-ee25-4ef9-a27a-391ce5b83169
+                  composition_percentage: 1
+                  composition_index: 92.75276487789482
+                  ad_play_in_market_impressions: null
+                  structure_in_market_impressions: 7338.2990463734195
+                  ad_play_total_impressions: null
+                  structure_total_impressions: 7568.705417793602
+                  ad_play_in_market_ratings: null
+                  structure_in_market_ratings: 0.0978449787807639
+                  demographic_population: 7499924
+              veh_measures:
+                - demo_id: 867104db-e0bf-4825-9e66-dd93df5e4f06
+                  custom_demo_id: null
+                  panel_id: 66633aaf-93f5-dd11-bfe8-001ec9ace3ee
+                  daypart_id: d23241ee-ee25-4ef9-a27a-391ce5b83169
+                  composition_percentage: 0.9000376109433036
+                  composition_index: 76.47878006184848
+                  ad_play_in_market_impressions: null
+                  structure_in_market_impressions: 6581.884195749979
+                  ad_play_total_impressions: null
+                  structure_total_impressions: 6812.119542164592
+                  ad_play_in_market_ratings: null
+                  structure_in_market_ratings: 0.08067753691419788
+                  demographic_population: 8158261.205656217
+                - demo_id: null
+                  custom_demo_id: 37c01eb4-12fb-489d-ba0b-4d2ee93c6472
+                  panel_id: 66633aaf-93f5-dd11-bfe8-001ec9ace3ee
+                  daypart_id: d23241ee-ee25-4ef9-a27a-391ce5b83169
+                  composition_percentage: 1
+                  composition_index: 92.75276487789482
+                  ad_play_in_market_impressions: null
+                  structure_in_market_impressions: 7338.2990463734195
+                  ad_play_total_impressions: null
+                  structure_total_impressions: 7568.705417793602
+                  ad_play_in_market_ratings: null
+                  structure_in_market_ratings: 0.0978449787807639
+                  demographic_population: 7499924
+              ped_measures:
+                - demo_id: 867104db-e0bf-4825-9e66-dd93df5e4f06
+                  custom_demo_id: null
+                  panel_id: 66633aaf-93f5-dd11-bfe8-001ec9ace3ee
+                  daypart_id: d23241ee-ee25-4ef9-a27a-391ce5b83169
+                  composition_percentage: 0
+                  composition_index: 0
+                  ad_play_in_market_impressions: null
+                  structure_in_market_impressions: 0
+                  ad_play_total_impressions: null
+                  structure_total_impressions: 0
+                  ad_play_in_market_ratings: null
+                  structure_in_market_ratings: 0
+                  demographic_population: 8158261.205656217
+                - demo_id: null
+                  custom_demo_id: 37c01eb4-12fb-489d-ba0b-4d2ee93c6472
+                  panel_id: 66633aaf-93f5-dd11-bfe8-001ec9ace3ee
+                  daypart_id: d23241ee-ee25-4ef9-a27a-391ce5b83169
+                  composition_percentage: 0
+                  composition_index: 0
+                  ad_play_in_market_impressions: null
+                  structure_in_market_impressions: 0
+                  ad_play_total_impressions: null
+                  structure_total_impressions: 0
+                  ad_play_in_market_ratings: null
+                  structure_in_market_ratings: 0
+                  demographic_population: 7499924
+              panels:
+                - id: 66633aaf-93f5-dd11-bfe8-001ec9ace3ee
+                  geopath_panel_id: 2413
+                  plant_unit_id: CHI0023AB Fx01
+                  structure_id: CHI0023AB
+                  plant_unique_panel_id: 0
+                  primary_artery: WASHINGTON & LASALLE
+                  cross_artery: LOOP
+                  street_side: SW
+                  facing: E
+                  distance_dir: 2.6 FT E
+                  illumination_hours: 24
+                  lat: 41.883114
+                  lon: -87.632167
+                  height: 45
+                  width: 66
+                  is_digital: false
+                  is_trivision: false
+                  ad_length: 0
+                  ads_in_rotation: 0
+                  county_fips: 17031
+                  county: null
+                  media_type_id: c51ffe38-b21f-dc11-bb82-00188bc22971
+                  media_type:
+                    id: c51ffe38-b21f-dc11-bb82-00188bc22971
+                    name: Transit Shelters (TSA)
+                    category: Street Furniture
+                    panels: null
+                  plant_id: 63cf61fd-af8a-4c1f-92b8-d03b6753a100
+                  plant:
+                    id: 63cf61fd-af8a-4c1f-92b8-d03b6753a100
+                    name: JCDecaux / Chicago
+                    plant_code: EOG
+                    created_at: '2017-08-24T15:20:16.776271Z'
+                    updated_at: '2017-08-24T15:20:16.776271Z'
+                    operator_id: d6105ba2-7d9f-4264-ae14-548e78c2311e
+                    operator:
+                      id: d6105ba2-7d9f-4264-ae14-548e78c2311e
+                      name: JCDecaux
+                      created_at: '2017-08-24T15:19:27.157985Z'
+                      updated_at: '2017-08-24T15:19:27.157985Z'
+                      plants: null
+                    panels: null
+                  panel_segments: null
+                  markets: null
+                  created_at: '2017-08-24T18:42:07.047583Z'
+                  updated_at: '2017-08-24T18:42:07.047583Z'
+          schema:
+            type: object
+            properties:
+              dayparts:
+                type: array
+                items:
+                  $ref: '#/definitions/daypart'
+              demos:
+                type: array
+                items:
+                  $ref: '#/definitions/demo'
+              custom_demos:
+                type: array
+                items:
+                  $ref: '#/definitions/custom_demo'
+              panels:
+                type: array
+                items:
+                  $ref: '#/definitions/panel'
+              market:
+                $ref: '#/definitions/market'
+              measures:
+                type: array
+                items:
+                  $ref: '#/definitions/measure'
+              veh_measures:
+                type: array
+                items:
+                  $ref: '#/definitions/measure'
+              ped_measures:
+                type: array
+                items:
+                  $ref: '#/definitions/measure'
+        '400':
+          description: InputInvalid
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '404':
+          description: NotFoundError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+  /audience/homes:
+    get:
+      description: 'Gets the home location of the audience of a set of panels for a daypart and a demographic. If the inventory is not clean (both vehicular and pedestrian home mappings have not been validated), the panel is not used for home calculations. If only the vehicular mapping is good, it will be used for home calculations.'
+      operationId: getAudienceHomes
+      tags:
+        - Audience
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: daypart_id
+          type: string
+          description: Daypart ID to look for.
+          required: true
+        - in: query
+          name: demo_id
+          type: string
+          description: Demo ID to get information for. Either this or custom_demo_id must be provided.
+        - in: query
+          name: custom_demo_id
+          type: string
+          description: Custom demo ID to get information for. Either this or demo_id must be provided.
+        - in: query
+          name: panel_ids
+          type: string
+          description: Comma-separated list of panel IDs.
+          required: true
+        - in: query
+          name: reporting_level
+          type: string
+          enum:
+            - state
+            - county
+            - census_tract
+            - zip_code
+            - dma
+            - cbsa
+          description: Geo level to get homes for.
+          required: true
+      responses:
+        '200':
+          description: The bad_panels field contains only panels that have bad data and are NOT considered in the homes percentages.
+          examples:
+            application/json:
+              custom_demo: null
+              daypart:
+                id: d23241ee-ee25-4ef9-a27a-391ce5b83169
+                name: Average Weekly Audience
+                description: Audience for the entire week.
+                start_hour: 0
+                end_hour: 23
+                days:
+                  - 1
+                  - 2
+                  - 3
+                  - 4
+                  - 5
+                  - 6
+                  - 7
+                user_id: null
+                company_id: null
+                created_at: '2017-10-02T16:28:36.669968Z'
+                updated_at: '2017-10-02T16:28:36.669968Z'
+              demo:
+                id: 867104db-e0bf-4825-9e66-dd93df5e4f06
+                source_demo_id: b01001e2
+                name: Total Population
+                description: Total Population (source)
+                average_base: null
+                percent_base: b01001e1
+                true_percent_base: b01001e1
+                year: 2016
+                demo_subcategory_id: f502801f-a507-48fc-9567-9ac63c112c7d
+                demo_subcategory: null
+              bad_panels:
+                0025005c-e6eb-40ec-992e-7b8639d28010: -2
+              homes:
+                '501': 0.0013129452583932823
+                '505': 0.0009551437887405076
+                '511': 0.0036806499437747097
+                '517': 0.004168635800627484
+                '524': 0.001052428506190279
+                '535': 0.002266297634380384
+                '563': 0.00048653933732861006
+                '602': 0.9649806637516591
+                '610': 0.004719556371427522
+                '616': 0.0035600922347284914
+                '635': 0.0012019691592752794
+                '648': 0.0034644270335458093
+                '649': 0.0018229058979640884
+                '652': 0.0011055266502241472
+                '669': 0.00237515617501025
+                '807': 0.001348951482920563
+                '819': 0.0014981109738096334
+              panels:
+                - id: 0025005c-e6eb-40ec-992e-7b8639d28010
+                  geopath_panel_id: 30819987
+                  plant_unit_id: 4-1
+                  structure_id: ''
+                  plant_unique_panel_id: '0'
+                  primary_artery: 5th Avenue
+                  cross_artery: W 34th Street
+                  street_side: E
+                  facing: 'N'
+                  distance_dir: 131 Ft N
+                  illumination_hours: 12
+                  lat: 40.748189
+                  lon: -73.984678
+                  height: 36
+                  width: 96
+                  is_digital: false
+                  is_trivision: false
+                  ad_length: 0
+                  ads_in_rotation: 0
+                  county_fips: '36061'
+                  county: null
+                  media_type_id: b365a10e-61ef-49bc-8154-2d4e1e2b03a2
+                  media_type:
+                    id: b365a10e-61ef-49bc-8154-2d4e1e2b03a2
+                    name: Banners
+                    category: Street Furniture
+                  panels: []
+                  plant_id: a6ce58f3-587a-4c19-8049-128b1058fe23
+                  plant:
+                    id: a6ce58f3-587a-4c19-8049-128b1058fe23
+                    name: JCDecaux  / New York
+                    plant_code: ''
+                    created_at: '2017-08-24T15:20:16.776271Z'
+                    updated_at: '2017-08-24T15:20:16.776271Z'
+                    operator_id: d6105ba2-7d9f-4264-ae14-548e78c2311e
+                    operator:
+                      id: d6105ba2-7d9f-4264-ae14-548e78c2311e
+                      name: JCDecaux
+                      created_at: '2017-08-24T15:19:27.157985Z'
+                      updated_at: '2017-08-24T15:19:27.157985Z'
+                      plants: []
+                    panels: []
+                  panel_segments: []
+                  markets: []
+                  created_at: '2017-08-24T18:43:20.847467Z'
+                  updated_at: '2017-08-24T18:43:20.847467Z'
+                - id: 66633aaf-93f5-dd11-bfe8-001ec9ace3ee
+                  geopath_panel_id: 2413
+                  plant_unit_id: CHI0023AB Fx01
+                  structure_id: CHI0023AB
+                  plant_unique_panel_id: 0
+                  primary_artery: WASHINGTON & LASALLE
+                  cross_artery: LOOP
+                  street_side: SW
+                  facing: E
+                  distance_dir: 2.6 FT E
+                  illumination_hours: 24
+                  lat: 41.883114
+                  lon: -87.632167
+                  height: 45
+                  width: 66
+                  is_digital: false
+                  is_trivision: false
+                  ad_length: 0
+                  ads_in_rotation: 0
+                  county_fips: 17031
+                  county: null
+                  media_type_id: c51ffe38-b21f-dc11-bb82-00188bc22971
+                  media_type:
+                    id: c51ffe38-b21f-dc11-bb82-00188bc22971
+                    name: Transit Shelters (TSA)
+                    category: Street Furniture
+                    panels: null
+                  plant_id: 63cf61fd-af8a-4c1f-92b8-d03b6753a100
+                  plant:
+                    id: 63cf61fd-af8a-4c1f-92b8-d03b6753a100
+                    name: JCDecaux / Chicago
+                    plant_code: EOG
+                    created_at: '2017-08-24T15:20:16.776271Z'
+                    updated_at: '2017-08-24T15:20:16.776271Z'
+                    operator_id: d6105ba2-7d9f-4264-ae14-548e78c2311e
+                    operator:
+                      id: d6105ba2-7d9f-4264-ae14-548e78c2311e
+                      name: JCDecaux
+                      created_at: '2017-08-24T15:19:27.157985Z'
+                      updated_at: '2017-08-24T15:19:27.157985Z'
+                      plants: null
+                    panels: null
+                  panel_segments: null
+                  markets: null
+                  created_at: '2017-08-24T18:42:07.047583Z'
+                  updated_at: '2017-08-24T18:42:07.047583Z'
+              reporting_level: dma
+          schema:
+            type: object
+            properties:
+              daypart:
+                $ref: '#/definitions/daypart'
+              demo:
+                $ref: '#/definitions/demo'
+              custom_demo:
+                $ref: '#/definitions/custom_demo'
+              panels:
+                type: array
+                items:
+                  $ref: '#/definitions/panel'
+              homes:
+                type: object
+                additionalProperties:
+                  type: number
+                  format: float
+              reporting_level:
+                type: string
+        '400':
+          description: InputInvalid
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '404':
+          description: NotFoundError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+  '/census-tracts/{fips}':
+    get:
+      description: Get a single census tract
+      operationId: getCensusTract
+      tags:
+        - Census Tracts
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: fips
+          type: string
+          description: census tract FIPS
+          required: true
+      responses:
+        '200':
+          description: ''
+          examples:
+            application/json:
+              fips: 26099226100
+              county_fips: 26099
+              county: null
+              block_groups: null
+              markets: null
+          schema:
+            $ref: '#/definitions/census_tract'
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '404':
+          description: NotFoundError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+  /census-tracts:
+    get:
+      description: Get all census tracts
+      operationId: getCensusTracts
+      tags:
+        - Census Tracts
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: fips
+          description: csv list of census tract FIPS
+          type: string
+      responses:
+        '200':
+          description: ''
+          examples:
+            application/json:
+              - fips: 26099226100
+                county_fips: 26099
+                county: null
+                block_groups: null
+                markets: null
+              - fips: 26099230700
+                county_fips: 26099
+                county: null
+                block_groups: null
+                markets: null
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/census_tract'
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+  '/counties/{fips}':
+    get:
+      description: Get a single county
+      operationId: getCounty
+      tags:
+        - Counties
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: fips
+          type: string
+          description: countyFIPS
+          required: true
+      responses:
+        '200':
+          description: ''
+          examples:
+            application/json:
+              fips: 3093
+              name: Imperial County
+              state_fips: 6
+              state: null
+              census_tracts: null
+              panels: null
+              markets: null
+          schema:
+            $ref: '#/definitions/county'
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '404':
+          description: NotFoundError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+  /counties:
+    get:
+      description: Get all counties
+      operationId: getCounties
+      tags:
+        - Counties
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ''
+          examples:
+            application/json:
+              - fips: 3093
+                name: Imperial County
+                state_fips: 6
+                state: null
+                census_tracts: null
+                panels: null
+                markets: null
+              - fips: 06029
+                name: Kern County
+                state_fips: 6
+                state: null
+                census_tracts: null
+                panels: null
+                markets: null
+              - ...
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/county'
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+  /custom-demos:
+    get:
+      description: Get all custom demos
+      operationId: getCustomDemos
+      tags:
+        - Custom Demos
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ''
+          examples:
+            application/json:
+              - id: b2c07bd8-34ba-486a-96ab-5e80c534eff8
+                name: All Adults/60-84/white/100K-200K
+                age_min: 60
+                age_max: 84
+                hhinc_min: 100
+                hhinc_max: 200
+                races:
+                  - white
+                sex: null
+                employed: null
+                user_id: auth0|5991e891d43c5e5ff0d7288a
+                company_id: null
+              - id: 87f0a4f4-f855-4a47-b666-c2d0bcbcb0d7
+                name: test
+                age_min: 18
+                age_max: 49
+                hhinc_min: 0
+                hhinc_max: 200
+                races: null
+                sex: female
+                employed: null
+                user_id: auth0|5991e891d43c5e5ff0d7288a
+                company_id: null
+              - ...
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/custom_demo'
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+    post:
+      description: Create a custom demo
+      operationId: createCustomDemo
+      tags:
+        - Custom Demos
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: name
+          type: string
+          description: 'The name of the custom demo. If none supplied, one will be auto generated.'
+        - in: formData
+          name: age_min
+          type: integer
+          description: The minimum age in the custom demo.
+          minimum: 0
+          maximum: 84
+        - in: formData
+          name: age_max
+          type: integer
+          description: The maximum age in the custom demo.
+          minimum: 0
+          maximum: 84
+        - in: formData
+          name: hhinc_min
+          type: integer
+          description: The minimum household income in the custom demo
+          enum:
+            - 0
+            - 15
+            - 25
+            - 35
+            - 50
+            - 75
+            - 100
+            - 150
+            - 200
+        - in: formData
+          name: hhinc_max
+          type: integer
+          description: The maximum household income in the custom demo
+          enum:
+            - 0
+            - 15
+            - 25
+            - 35
+            - 50
+            - 75
+            - 100
+            - 150
+            - 200
+        - in: formData
+          name: races
+          type: string
+          description: 'csv string of the races included in the custom demo. Supported values are white, black, amerindian, asian, pacific, other.'
+        - in: formData
+          name: sex
+          type: string
+          enum:
+            - male
+            - female
+          description: The sex in the custom demo.
+        - in: formData
+          name: employed
+          type: boolean
+          description: The employment status in the custom demo.
+        - in: formData
+          name: audience
+          type: string
+          enum:
+            - user
+            - company
+          description: Who can use this custom demo.
+      responses:
+        '200':
+          description: ''
+          examples:
+            application/json:
+              id: b2c07bd8-34ba-486a-96ab-5e80c534eff8
+              name: All Adults/60-84/white/100K-200K
+              age_min: 60
+              age_max: 84
+              hhinc_min: 100
+              hhinc_max: 200
+              races:
+                - white
+              sex: null
+              employed: null
+              user_id: auth0|5991e891d43c5e5ff0d7288a
+              company_id: null
+          schema:
+            $ref: '#/definitions/custom_demo'
+        '400':
+          description: InputInvalid
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+  '/custom-demos/{id}':
+    get:
+      description: Get a single custom demo
+      operationId: getCustomDemo
+      tags:
+        - Custom Demos
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          type: string
+          description: Custom demo ID
+          required: true
+      responses:
+        '200':
+          description: ''
+          examples:
+            application/json:
+              id: b2c07bd8-34ba-486a-96ab-5e80c534eff8
+              name: All Adults/60-84/white/100K-200K
+              age_min: 60
+              age_max: 84
+              hhinc_min: 100
+              hhinc_max: 200
+              races:
+                - white
+              sex: null
+              employed: null
+              user_id: auth0|5991e891d43c5e5ff0d7288a
+              company_id: null
+          schema:
+            $ref: '#/definitions/custom_demo'
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '404':
+          description: NotFoundError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+    put:
+      description: Update a custom demo
+      operationId: updateCustomDemo
+      tags:
+        - Custom Demos
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: path
+          name: id
+          type: string
+          description: Custom demo ID
+          required: true
+        - in: formData
+          name: name
+          type: string
+          description: 'The name of the custom demo. If none supplied, one will be auto generated.'
+        - in: formData
+          name: age_min
+          type: integer
+          description: The minimum age in the custom demo.
+          minimum: 0
+          maximum: 84
+        - in: formData
+          name: age_max
+          type: integer
+          description: The maximum age in the custom demo.
+          minimum: 0
+          maximum: 84
+        - in: formData
+          name: hhinc_min
+          type: integer
+          description: The minimum household income in the custom demo
+          enum:
+            - 0
+            - 15
+            - 25
+            - 35
+            - 50
+            - 75
+            - 100
+            - 150
+            - 200
+        - in: formData
+          name: hhinc_max
+          type: integer
+          description: The maximum household income in the custom demo
+          enum:
+            - 0
+            - 15
+            - 25
+            - 35
+            - 50
+            - 75
+            - 100
+            - 150
+            - 200
+        - in: formData
+          name: races
+          type: string
+          description: 'csv string of the races included in the custom demo. Supported values are white, black, amerindian, asian, pacific, other.'
+        - in: formData
+          name: sex
+          type: string
+          enum:
+            - male
+            - female
+          description: The sex in the custom demo.
+        - in: formData
+          name: employed
+          type: boolean
+          description: The employment status in the custom demo.
+        - in: formData
+          name: audience
+          type: string
+          enum:
+            - user
+            - company
+          description: Who can use this custom demo.
+      responses:
+        '200':
+          description: ''
+          examples:
+            application/json:
+              id: b2c07bd8-34ba-486a-96ab-5e80c534eff8
+              name: All Adults/60-84/white/100K-200K
+              age_min: 60
+              age_max: 84
+              hhinc_min: 100
+              hhinc_max: 200
+              races:
+                - white
+              sex: null
+              employed: null
+              user_id: auth0|5991e891d43c5e5ff0d7288a
+              company_id: null
+          schema:
+            $ref: '#/definitions/custom_demo'
+        '400':
+          description: InputInvalid
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '404':
+          description: NotFoundError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+    delete:
+      description: Delete a custom demo
+      operationId: deleteCustomDemo
+      tags:
+        - Custom Demos
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          type: string
+          description: The ID of the custom demo to delete.
+          required: true
+      responses:
+        '204':
+          description: ''
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '404':
+          description: NotFoundError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+  /custom-markets:
+    get:
+      tags:
+        - Custom Markets
+      description: Get all custom markets
+      operationId: getAllCustomMarkets
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ''
+          examples:
+            application/json:
+              - id: 8af854d2-9160-4723-89f8-56260c2c25e2
+                name: Illinois Counties
+                market_type: trade_area
+                location_id: 1cdfd3b3-88dd-46c0-b45f-f7cedf2c8b05
+                location:
+                  id: 1cdfd3b3-88dd-46c0-b45f-f7cedf2c8b05
+                  name: Illinois Counties
+                  lat: 41.14324012727707
+                  lon: -87.74180247230592
+                  created_at: '2018-01-10T21:15:39.160529Z'
+                  updated_at: '2018-01-10T21:15:39.160529Z'
+                  markets: null
+                value: '{"area_type":"County","fips":["17097","17031","17197","17091"]}'
+                user_id: auth0|5991e891d43c5e5ff0d7288a
+                company_id: ''
+                created_at: '2018-01-10T21:15:45.741774Z'
+                updated_at: '2018-01-10T21:15:45.741774Z'
+                market_id: d228f723-ebcc-48c0-95a4-b13451e9756d
+              - id: 01fcce88-1fe4-48f8-8991-735ddf510723
+                name: 5 minute drive-time
+                market_type: drive-time
+                location_id: 4e127bba-119b-4daf-94a3-4f8625355aff
+                location:
+                  id: 4e127bba-119b-4daf-94a3-4f8625355aff
+                  name: 5 minute drive-time
+                  lat: 39.970826703284416
+                  lon: -83.01456666934057
+                  created_at: '2018-02-03T01:32:51.950977Z'
+                  updated_at: '2018-02-03T01:32:51.950977Z'
+                  markets: null
+                value: '{"area_type":"drive-time","value":5}'
+                user_id: auth0|5991e891d43c5e5ff0d7288a
+                company_id: ''
+                created_at: '2018-02-03T01:32:57.541107Z'
+                updated_at: '2018-02-03T01:32:57.541107Z'
+                market_id: f7e4a452-ebc1-43e9-9ddb-c470936d85ec
+              - ...
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/custom_market'
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+  '/custom-markets/{id}':
+    get:
+      tags:
+        - Custom Markets
+      description: Get custom market by id
+      operationId: getCustomMarket
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          type: string
+          description: Id of the market to get.
+          required: true
+      responses:
+        '200':
+          description: ''
+          examples:
+            application/json:
+              id: 8af854d2-9160-4723-89f8-56260c2c25e2
+              name: Illinois Counties
+              market_type: trade_area
+              location_id: 1cdfd3b3-88dd-46c0-b45f-f7cedf2c8b05
+              location:
+                id: 1cdfd3b3-88dd-46c0-b45f-f7cedf2c8b05
+                name: Illinois Counties
+                lat: 41.14324012727707
+                lon: -87.74180247230592
+                created_at: '2018-01-10T21:15:39.160529Z'
+                updated_at: '2018-01-10T21:15:39.160529Z'
+                markets: null
+              value: '{"area_type":"County","fips":["17097","17031","17197","17091"]}'
+              user_id: auth0|5991e891d43c5e5ff0d7288a
+              company_id: ''
+              created_at: '2018-01-10T21:15:45.741774Z'
+              updated_at: '2018-01-10T21:15:45.741774Z'
+              market_id: d228f723-ebcc-48c0-95a4-b13451e9756d
+          schema:
+            $ref: '#/definitions/custom_market'
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '404':
+          description: NotFoundError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+    delete:
+      tags:
+        - Custom Markets
+      description: Delete a custom market.
+      operationId: deleteCustomMarket
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          type: string
+          description: The id of the custom market to delete.
+          required: true
+      responses:
+        '204':
+          description: ''
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '404':
+          description: NotFoundError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+  /custom-markets/create/trade-area:
+    post:
+      tags:
+        - Custom Markets
+      description: Create a new custom market.
+      operationId: createCustomMarket
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: name
+          type: string
+          required: true
+          description: Name of new market
+        - in: formData
+          name: area_type
+          type: string
+          required: true
+          description: Area type of market
+          enum:
+            - County
+        - in: formData
+          name: fips
+          type: array
+          items:
+            type: string
+          required: true
+          description: 'Comma seperated list of fips ex: 06025,06026,06027'
+        - in: formData
+          name: lat
+          type: number
+          format: float
+          required: true
+          description: Lat coordinate component
+        - in: formData
+          name: lon
+          type: number
+          format: float
+          required: true
+          description: Lon coordinate component
+        - in: formData
+          name: audience
+          type: string
+          enum:
+            - user
+            - company
+          description: Who can use this custom market.
+      responses:
+        '200':
+          description: ''
+          examples:
+            application/json:
+              id: 8af854d2-9160-4723-89f8-56260c2c25e2
+              name: Illinois Counties
+              market_type: trade_area
+              location_id: 1cdfd3b3-88dd-46c0-b45f-f7cedf2c8b05
+              location:
+                id: 1cdfd3b3-88dd-46c0-b45f-f7cedf2c8b05
+                name: Illinois Counties
+                lat: 41.14324012727707
+                lon: -87.74180247230592
+                created_at: '2018-01-10T21:15:39.160529Z'
+                updated_at: '2018-01-10T21:15:39.160529Z'
+                markets: null
+              value: '{"area_type":"County","fips":["17097","17031","17197","17091"]}'
+              user_id: auth0|5991e891d43c5e5ff0d7288a
+              company_id: ''
+              created_at: '2018-01-10T21:15:45.741774Z'
+              updated_at: '2018-01-10T21:15:45.741774Z'
+              market_id: d228f723-ebcc-48c0-95a4-b13451e9756d
+          schema:
+            $ref: '#/definitions/custom_market'
+        '400':
+          description: InputInvalid
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+  /custom-markets/create/drawn-area:
+    post:
+      tags:
+        - Custom Markets
+      description: create a new drawn area based custom market.
+      operationId: createDrawnAreaCustomMarket
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: name
+          type: string
+          required: true
+          description: Name of new market
+        - in: formData
+          name: lat
+          type: number
+          format: float
+          required: true
+          description: Lat coordinate component
+        - in: formData
+          name: lon
+          type: number
+          format: float
+          required: true
+          description: Lon coordinate component
+        - in: formData
+          name: geometry
+          type: string
+          format: GeoJSON
+          description: GeoJSON Multipolygon
+          required: true
+        - in: formData
+          name: audience
+          type: string
+          enum:
+            - user
+            - company
+          description: Who can use this custom market.
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/custom_market'
+        '400':
+          description: InputInvalid
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+  /custom-markets/create/drive-time:
+    post:
+      tags:
+        - Custom Markets
+      description: create a new drive-time based custom market.
+      operationId: createDriveTimeCustomMarket
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: name
+          type: string
+          required: true
+          description: Name of new market
+        - in: formData
+          name: drive-time
+          type: number
+          format: float
+          required: true
+          description: Drive time around location (in minutes)
+        - in: formData
+          name: lat
+          type: number
+          format: float
+          required: true
+          description: Lat coordinate component
+        - in: formData
+          name: lon
+          type: number
+          format: float
+          required: true
+          description: Lon coordinate component
+        - in: formData
+          name: audience
+          type: string
+          enum:
+            - user
+            - company
+          description: Who can use this custom market.
+      responses:
+        '200':
+          description: ''
+          examples:
+            application/json:
+              id: 8af854d2-9160-4723-89f8-56260c2c25e2
+              name: 5 minute drive time
+              market_type: drive-time
+              location_id: 1cdfd3b3-88dd-46c0-b45f-f7cedf2c8b05
+              location:
+                id: 1cdfd3b3-88dd-46c0-b45f-f7cedf2c8b05
+                name: Illinois Counties
+                lat: 41.14324012727707
+                lon: -87.74180247230592
+                created_at: '2018-01-10T21:15:39.160529Z'
+                updated_at: '2018-01-10T21:15:39.160529Z'
+                markets: null
+              value: '{"area_type":"County","fips":["17097","17031","17197","17091"]}'
+              user_id: auth0|5991e891d43c5e5ff0d7288a
+              company_id: ''
+              created_at: '2018-01-10T21:15:45.741774Z'
+              updated_at: '2018-01-10T21:15:45.741774Z'
+              market_id: d228f723-ebcc-48c0-95a4-b13451e9756d
+          schema:
+            $ref: '#/definitions/custom_market'
+        '400':
+          description: InputInvalid
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+  /custom-markets/create/drive-distance:
+    post:
+      tags:
+        - Custom Markets
+      description: create a new drive-distance based custom market.
+      operationId: createDriveDistanceCustomMarket
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: name
+          type: string
+          required: true
+          description: Name of new market
+        - in: formData
+          name: drive-distance
+          type: number
+          format: float
+          required: true
+          description: Drive time around location (in minutes)
+        - in: formData
+          name: lat
+          type: number
+          format: float
+          required: true
+          description: Lat coordinate component
+        - in: formData
+          name: lon
+          type: number
+          format: float
+          required: true
+          description: Lon coordinate component
+        - in: formData
+          name: audience
+          type: string
+          enum:
+            - user
+            - company
+          description: Who can use this custom market.
+      responses:
+        '200':
+          description: ''
+          examples:
+            application/json:
+              id: 8af854d2-9160-4723-89f8-56260c2c25e2
+              name: Aurora 5 miles
+              market_type: drive-time
+              location_id: 1cdfd3b3-88dd-46c0-b45f-f7cedf2c8b05
+              location:
+                id: 1cdfd3b3-88dd-46c0-b45f-f7cedf2c8b05
+                name: Aurora 5 miles
+                lat: 41.14324012727707
+                lon: -87.74180247230592
+                created_at: '2018-01-10T21:15:39.160529Z'
+                updated_at: '2018-01-10T21:15:39.160529Z'
+                markets: null
+              value: '{"area_type":"drive-distance","value":5}'
+              user_id: auth0|5991e891d43c5e5ff0d7288a
+              company_id: ''
+              created_at: '2018-01-10T21:15:45.741774Z'
+              updated_at: '2018-01-10T21:15:45.741774Z'
+              market_id: d228f723-ebcc-48c0-95a4-b13451e9756d
+          schema:
+            $ref: '#/definitions/custom_market'
+        '400':
+          description: InputInvalid
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+  /day-parts:
+    get:
+      description: Get all dayparts.
+      operationId: getDayParts
+      tags:
+        - Day Parts
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ''
+          examples:
+            application/json:
+              - id: f86ff6f8-235e-4a5c-8c6f-eb01098f9615
+                name: Weekday Early AM
+                description: Midnight to 6AM on weekdays
+                start_hour: 0
+                end_hour: 5
+                days:
+                  - 1
+                  - 2
+                  - 3
+                  - 4
+                  - 5
+                user_id: null
+                company_id: null
+                created_at: '2017-09-12T14:57:55.929835Z'
+                updated_at: '2017-09-12T14:57:55.929835Z'
+              - id: f6463936-c271-4d0f-a691-d4b8fc96b61a
+                name: Weekday Morning Drive
+                description: 6AM to 10AM on weekdays
+                start_hour: 6
+                end_hour: 9
+                days:
+                  - 1
+                  - 2
+                  - 3
+                  - 4
+                  - 5
+                user_id: null
+                company_id: null
+                created_at: '2017-09-12T14:57:55.929835Z'
+                updated_at: '2017-09-12T14:57:55.929835Z'
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/daypart'
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+    post:
+      description: Create a daypart.
+      operationId: createDayPart
+      tags:
+        - Day Parts
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: name
+          type: string
+          description: The name of the daypart.
+          required: true
+        - in: formData
+          name: description
+          type: string
+          description: Description of the daypart.
+        - in: formData
+          name: start_hour
+          type: integer
+          description: The hour the daypart starts at.
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+            - 14
+            - 15
+            - 16
+            - 17
+            - 18
+            - 19
+            - 20
+            - 21
+            - 22
+            - 23
+          required: true
+        - in: formData
+          name: end_hour
+          type: integer
+          description: The hour the daypart ends at.
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+            - 14
+            - 15
+            - 16
+            - 17
+            - 18
+            - 19
+            - 20
+            - 21
+            - 22
+            - 23
+          required: true
+        - in: formData
+          name: days
+          type: string
+          description: 'A comma separated list of the days of the week the daypart consists of (1=Monday, 7=Sunday).'
+          required: true
+        - in: formData
+          name: audience
+          type: string
+          enum:
+            - user
+            - company
+          description: Who can use this custom demo.
+      responses:
+        '200':
+          description: Successful response
+  '/day-parts/{id}':
+    get:
+      description: Get a daypart.
+      operationId: getDayPart
+      tags:
+        - Day Parts
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          type: string
+          description: Daypart ID
+          required: true
+      responses:
+        '200':
+          description: ''
+          examples:
+            application/json:
+              - id: f86ff6f8-235e-4a5c-8c6f-eb01098f9615
+                name: Weekday Early AM
+                description: Midnight to 6AM on weekdays
+                start_hour: 0
+                end_hour: 5
+                days:
+                  - 1
+                  - 2
+                  - 3
+                  - 4
+                  - 5
+                user_id: null
+                company_id: null
+                created_at: '2017-09-12T14:57:55.929835Z'
+                updated_at: '2017-09-12T14:57:55.929835Z'
+          schema:
+            $ref: '#/definitions/daypart'
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '404':
+          description: NotFoundError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+    delete:
+      description: Delete a daypart.
+      operationId: deleteDayPart
+      tags:
+        - Day Parts
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          type: string
+          description: The id of the daypart to delete.
+          required: true
+      responses:
+        '204':
+          description: ''
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '404':
+          description: NotFoundError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+  /demos/categories:
+    get:
+      description: 'Get all demographic types, categories and subcategories.'
+      operationId: getDemoCategories
+      tags:
+        - Demos
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ''
+          examples:
+            application/json:
+              - type: Age
+                demo_categories:
+                  - id: f7482503-d2ea-4b2b-9be9-dbacdded7f20
+                    name: 1 year increments
+                    description: 1 year increment population data by 1-year age breaks up to age 84.
+                    demo_category_types: null
+                    demo_subcategories:
+                      - id: 6b4aa721-b23e-4f05-b846-c7e850355636
+                        name: 1 year increments (source)
+                        demo_category_id: f7482503-d2ea-4b2b-9be9-dbacdded7f20
+                        demo_category: null
+                        demos: null
+                  - id: fe3a9822-d5c6-4e9d-a70c-2c21fb303bb6
+                    name: 5 year increments
+                    description: 5 year increments population data by 5-year age breaks.
+                    demo_category_types: null
+                    demo_subcategories:
+                      - id: fbfa7cba-559e-4365-ab78-6b34de6e3af0
+                        name: 5 year increments (source)
+                        demo_category_id: fe3a9822-d5c6-4e9d-a70c-2c21fb303bb6
+                        demo_category: null
+                        demos: null
+              - ...
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/demo_category'
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+  '/demos/subcategories/{id}/demos':
+    get:
+      description: Get all demographics in a subcategory.
+      operationId: getDemosInSubcategory
+      tags:
+        - Demos
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          type: string
+          description: The ID of the subcategory to get demos for.
+          required: true
+      responses:
+        '200':
+          description: ''
+          examples:
+            application/json:
+              - id: 7506969c-7c3b-46ed-8f0d-90f1cb9f6fbf
+                source_demo_id: b01001e1
+                name: Total Population
+                description: Total Population (source)
+                percent_base: b01001e1
+                true_percent_base: b01001e1
+                year: 2016
+                demo_subcategory_id: c0d1bb75-7026-4164-b13f-34b1c217743e
+                demo_subcategory: null
+              - id: 06f90e7f-06b6-4ea9-b1b6-d0773c0e7f76
+                source_demo_id: b01001e2
+                name: Population Ages 0-4
+                description: Total Population Ages 0-4 (source)
+                percent_base: b01001e1
+                true_percent_base: b01001e1
+                year: 2016
+                demo_subcategory_id: c0d1bb75-7026-4164-b13f-34b1c217743e
+                demo_subcategory: null
+              - id: daf1d899-4166-4e7e-a27e-962234f3337c
+                source_demo_id: b01001e3
+                name: Population Ages 5-9
+                description: Total Population Ages 5-9 (source)
+                percent_base: b01001e1
+                true_percent_base: b01001e1
+                year: 2016
+                demo_subcategory_id: c0d1bb75-7026-4164-b13f-34b1c217743e
+                demo_subcategory: null
+              - ...
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/demo'
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+  /login:
+    post:
+      description: Log in to obtain API token.
+      tags:
+        - Authentication
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: username
+          type: string
+          description: Email of the person logging in.
+          required: true
+        - in: formData
+          name: password
+          type: string
+          description: The password of the person logging in.
+          required: true
+      responses:
+        '200':
+          description: JWT
+          schema:
+            type: object
+            properties:
+              token_type:
+                type: string
+              scope:
+                type: string
+              expires_in:
+                type: integer
+              access_token:
+                type: string
+          examples:
+            application/json:
+              token_type: Bearer
+              scope: ''
+              expires_in: 86400
+              access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI...
+        '400':
+          description: Login Error
+          schema:
+            $ref: '#/definitions/InsightsError'
+  '/markets/{market_type}':
+    get:
+      description: Get all markets of a certain type
+      operationId: getMarketsByType
+      tags:
+        - Markets
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: market_type
+          type: string
+          enum:
+            - DMA
+            - CBSA
+            - County
+            - Zip Codes
+          description: The type of market to get.
+          required: true
+        - in: query
+          name: id
+          type: string
+          description: Query string csv list of source market ids to get
+      responses:
+        '200':
+          description: ''
+          examples:
+            application/json:
+              - id: 5f0795d2-abaa-4550-9d21-d8e982864286
+                source_market_id: '618'
+                name: 'Houston, TX'
+                type: DMA
+                market_type: null
+                location_id: ''
+                location: null
+                created_at: '2017-09-21T18:08:02.649748Z'
+                updated_at: '2017-09-21T18:08:02.649748Z'
+                panels: null
+                counties: null
+                census_tracts: null
+                zip_codes: null
+                precalc_int_id: 186
+                cached: true
+              - id: 9781cf54-d078-434e-ae44-53d02cb28384
+                source_market_id: '616'
+                name: 'Kansas City, MO'
+                type: DMA
+                market_type: null
+                location_id: ''
+                location: null
+                created_at: '2017-09-21T18:08:02.649748Z'
+                updated_at: '2017-09-21T18:08:02.649748Z'
+                panels: null
+                counties: null
+                census_tracts: null
+                zip_codes: null
+                precalc_int_id: 187
+                cached: true
+              - ...
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/market'
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+  /markets:
+    get:
+      description: Get all markets
+      operationId: getMarkets
+      tags:
+        - Markets
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: id
+          type: string
+          description: Query string csv list of source demo ids to get
+      responses:
+        '200':
+          description: ''
+          examples:
+            application/json:
+              - id: 5f0795d2-abaa-4550-9d21-d8e982864286
+                source_demo_id: '618'
+                name: 'Houston, TX'
+                type: DMA
+                market_type: null
+                location_id: ''
+                location: null
+                created_at: '2017-09-21T18:08:02.649748Z'
+                updated_at: '2017-09-21T18:08:02.649748Z'
+                panels: null
+                counties: null
+                census_tracts: null
+                zip_codes: null
+                precalc_int_id: 186
+                cached: true
+              - id: cc90bb35-21e2-4b42-a2eb-ddbc92637e7a
+                source_demo_id: null
+                name: Drive 25 mins
+                type: Custom
+                market_type: null
+                location_id: f37f83d4-10f3-42ca-a89f-2ffa7ec9d693
+                location: null
+                created_at: '2018-02-02T19:57:29.682426Z'
+                updated_at: '2018-02-02T19:57:29.682426Z'
+                panels: null
+                counties: null
+                census_tracts: null
+                zip_codes: null
+                precalc_int_id: 36631
+                cached: false
+              - ...
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/market'
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+  /markets/search:
+    get:
+      description: Search markets by name
+      operationId: searchMarkets
+      tags:
+        - Markets
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: name
+          type: string
+          description: Market Name to search for
+          required: true
+        - in: query
+          name: market_type
+          type: string
+          enum:
+            - DMA
+            - CBSA
+            - County
+            - Zip Codes
+          description: 'Limit the ouput to a subset of market types (for example, DMA will only return the DMA portion of the results)'
+        - in: query
+          name: limit
+          type: number
+          format: integer
+          description: Limit the list of each market type to limit number of items.
+        - in: query
+          name: offset
+          type: number
+          format: integer
+          description: Offset the return list by offset items
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/market'
+          examples:
+            application/json:
+              CBSA:
+                - id: 32a92413-74a9-404c-9264-107a4a2b6eb7
+                  source_demo_id: '11860'
+                  name: 'Atchison, KS Micropolitan Statistical Area'
+                  type: CBSA
+                  market_type: null
+                  location_id: ''
+                  location: null
+                  created_at: '2017-09-21T18:05:30.45093Z'
+                  updated_at: '2017-09-21T18:05:30.45093Z'
+                  panels: []
+                  counties: []
+                  census_tracts: []
+                  zip_codes: []
+                  precalc_int_id: 739
+                  cached: true
+              County:
+                - id: 2c0fe9ef-529b-400b-8913-6f77c3e2af71
+                  source_demo_id: '20005'
+                  name: 'Atchison County, KS'
+                  type: County
+                  market_type: null
+                  location_id: ''
+                  location: null
+                  created_at: '2017-09-21T18:10:32.68306Z'
+                  updated_at: '2017-09-21T18:10:32.68306Z'
+                  panels: []
+                  counties: []
+                  census_tracts: []
+                  zip_codes: []
+                  precalc_int_id: 1159
+                  cached: true
+              Custom:
+                - id: 47eaf2c4-e4a2-4353-8d87-7d331744cc12
+                  source_demo_id: null
+                  name: five minutes in chicago
+                  type: Custom
+                  market_type: null
+                  location_id: 01968531-f636-4cdc-9769-8a919d5b0460
+                  location: null
+                  created_at: '2018-02-01T14:56:59.215137Z'
+                  updated_at: '2018-02-01T14:56:59.215137Z'
+                  panels: []
+                  counties: []
+                  census_tracts: []
+                  zip_codes: []
+                  precalc_int_id: 36602
+                  cached: false
+              DMA:
+                - id: 321f8d39-1ba4-4dc4-b80d-2dfdb3b6aed2
+                  source_demo_id: '602'
+                  name: 'Chicago, IL'
+                  type: DMA
+                  market_type: null
+                  location_id: ''
+                  location: null
+                  created_at: '2017-09-21T18:08:02.649748Z'
+                  updated_at: '2017-09-21T18:08:02.649748Z'
+                  panels: []
+                  counties: []
+                  census_tracts: []
+                  zip_codes: []
+                  precalc_int_id: 172
+                  cached: true
+              Zip Codes:
+                - id: 40c60f9a-f65d-4a6e-a492-805fdf4bd236
+                  source_demo_id: '01013'
+                  name: '01013 - Chicopee, MA'
+                  type: Zip Codes
+                  market_type: null
+                  location_id: ''
+                  location: null
+                  created_at: '2017-09-21T18:23:45.676872Z'
+                  updated_at: '2017-09-21T18:23:45.676872Z'
+                  panels: []
+                  counties: []
+                  census_tracts: []
+                  zip_codes: []
+                  precalc_int_id: 5751
+                  cached: true
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+  /media-types:
+    get:
+      description: Get all media types
+      operationId: getMediaTypes
+      tags:
+        - Media Types
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ''
+          examples:
+            application/json:
+              - id: c31ffe38-b21f-dc11-bb82-00188bc22971
+                name: Posters
+                category: Billboards
+                panels: null
+              - id: c41ffe38-b21f-dc11-bb82-00188bc22971
+                name: Bulletins
+                category: Billboards
+                panels: null
+              - id: c51ffe38-b21f-dc11-bb82-00188bc22971
+                name: Transit Shelters (TSA)
+                category: Street Furniture
+                panels: null
+              - ...
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/media_type'
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+  '/media-types/{id}':
+    get:
+      description: Get a single media type
+      operationId: getMediaType
+      tags:
+        - Media Types
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          type: string
+          description: The ID of the media type.
+          required: true
+      responses:
+        '200':
+          description: ''
+          examples:
+            application/json:
+              id: c31ffe38-b21f-dc11-bb82-00188bc22971
+              name: Posters
+              category: Billboards
+              panels: null
+          schema:
+            $ref: '#/definitions/media_type'
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '404':
+          description: NotFoundError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+  /operators:
+    get:
+      description: Get all operators
+      operationId: getOperators
+      tags:
+        - Operators
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ''
+          examples:
+            application/json:
+              - id: a2ab286e-e095-4501-a6d6-00ba58c68af2
+                name: Reflect Media
+                created_at: '2017-08-24T15:19:27.157985Z'
+                updated_at: '2017-08-24T15:19:27.157985Z'
+                plants: null
+              - id: 0ce2442b-20db-45f3-8695-010bc726314a
+                name: Radiant
+                created_at: '2017-08-24T15:19:27.157985Z'
+                updated_at: '2017-08-24T15:19:27.157985Z'
+                plants: null
+              - id: fb45ae51-1b8c-4efe-9794-01ef20b30dfb
+                name: JPOM
+                created_at: '2017-08-24T15:19:27.157985Z'
+                updated_at: '2017-08-24T15:19:27.157985Z'
+                plants: null
+              - ...
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/operator'
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+  '/operators/{id}':
+    get:
+      description: Get a single operator
+      operationId: getOperator
+      tags:
+        - Operators
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          type: string
+          description: The ID of the operator.
+          required: true
+      responses:
+        '200':
+          description: ''
+          examples:
+            application/json:
+              id: a2ab286e-e095-4501-a6d6-00ba58c68af2
+              name: Reflect Media
+              created_at: '2017-08-24T15:19:27.157985Z'
+              updated_at: '2017-08-24T15:19:27.157985Z'
+              plants: null
+          schema:
+            $ref: '#/definitions/operator'
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '404':
+          description: NotFoundError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+  /panel-sets:
+    get:
+      description: Get all panel sets.
+      operationId: getPanelSets
+      tags:
+        - Panel Sets
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/panel_set'
+          examples:
+            application/json:
+              - id: cda2b194-6930-4256-96e4-c475d32e491b
+                name: panel set test
+                description: this is a test panel set
+                panels:
+                  - id: 66633aaf-93f5-dd11-bfe8-001ec9ace3ee
+                    geopath_panel_id: 2413
+                    plant_unit_id: CHI0023AB Fx01
+                    structure_id: CHI0023AB
+                    plant_unique_panel_id: '0'
+                    primary_artery: WASHINGTON & LASALLE
+                    cross_artery: LOOP
+                    street_side: SW
+                    facing: E
+                    distance_dir: 2.6 FT E
+                    illumination_hours: 24
+                    lat: 41.883114
+                    lon: -87.632167
+                    height: 45
+                    width: 66
+                    is_digital: false
+                    is_trivision: false
+                    ad_length: 0
+                    ads_in_rotation: 0
+                    county_fips: '17031'
+                    county: null
+                    media_type_id: c51ffe38-b21f-dc11-bb82-00188bc22971
+                    media_type: null
+                    plant_id: 63cf61fd-af8a-4c1f-92b8-d03b6753a100
+                    plant: null
+                    panel_segments: []
+                    markets: []
+                    created_at: '2017-08-24T18:42:07.047583Z'
+                    updated_at: '2017-08-24T18:42:07.047583Z'
+                user_id: auth0|5991e891d43c5e5ff0d7288a
+                company_id: null
+                created_at: '2018-02-09T18:27:19.49016Z'
+                updated_at: '2018-02-09T18:27:19.49016Z'
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+    post:
+      description: Create a panel set.
+      operationId: createPanelSet
+      tags:
+        - Panel Sets
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: name
+          type: string
+          description: The name of the panel set.
+          required: true
+        - in: formData
+          name: description
+          type: string
+          description: Description of the panel set.
+          required: true
+        - in: formData
+          name: panel_ids
+          type: array
+          items:
+            type: string
+          description: The uuids or geopath_panel_ids of the panels in the panel set
+          required: true
+        - in: formData
+          name: audience
+          type: string
+          enum:
+            - user
+            - company
+          description: Who can use this panel set.
+          required: true
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/panel_set'
+          examples:
+            application/json:
+              id: cda2b194-6930-4256-96e4-c475d32e491b
+              name: panel set test
+              description: this is a test panel set
+              panels:
+                - id: 66633aaf-93f5-dd11-bfe8-001ec9ace3ee
+                  geopath_panel_id: 2413
+                  plant_unit_id: CHI0023AB Fx01
+                  structure_id: CHI0023AB
+                  plant_unique_panel_id: '0'
+                  primary_artery: WASHINGTON & LASALLE
+                  cross_artery: LOOP
+                  street_side: SW
+                  facing: E
+                  distance_dir: 2.6 FT E
+                  illumination_hours: 24
+                  lat: 41.883114
+                  lon: -87.632167
+                  height: 45
+                  width: 66
+                  is_digital: false
+                  is_trivision: false
+                  ad_length: 0
+                  ads_in_rotation: 0
+                  county_fips: '17031'
+                  county: null
+                  media_type_id: c51ffe38-b21f-dc11-bb82-00188bc22971
+                  media_type:
+                    id: c51ffe38-b21f-dc11-bb82-00188bc22971
+                    name: Transit Shelters (TSA)
+                    category: Street Furniture
+                    panels: []
+                  plant_id: 63cf61fd-af8a-4c1f-92b8-d03b6753a100
+                  plant:
+                    id: 63cf61fd-af8a-4c1f-92b8-d03b6753a100
+                    name: JCDecaux / Chicago
+                    plant_code: EOG
+                    created_at: '2017-08-24T15:20:16.776271Z'
+                    updated_at: '2017-08-24T15:20:16.776271Z'
+                    operator_id: d6105ba2-7d9f-4264-ae14-548e78c2311e
+                    operator:
+                      id: d6105ba2-7d9f-4264-ae14-548e78c2311e
+                      name: JCDecaux
+                      created_at: '2017-08-24T15:19:27.157985Z'
+                      updated_at: '2017-08-24T15:19:27.157985Z'
+                      plants: []
+                    panels: []
+                  panel_segments: []
+                  markets: []
+                  created_at: '2017-08-24T18:42:07.047583Z'
+                  updated_at: '2017-08-24T18:42:07.047583Z'
+              user_id: auth0|5991e891d43c5e5ff0d7288a
+              company_id: null
+              created_at: '2018-02-09T18:27:19.490159818Z'
+              updated_at: '2018-02-09T18:27:19.490159818Z'
+        '400':
+          description: InputInvalid
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+  '/panel-sets/{id}':
+    get:
+      description: Get a panel set.
+      operationId: getPanelSet
+      tags:
+        - Panel Sets
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          type: string
+          description: Panel Set ID
+          required: true
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/panel_set'
+          examples:
+            application/json:
+              id: cda2b194-6930-4256-96e4-c475d32e491b
+              name: panel set test
+              description: this is a test panel set
+              panels:
+                - id: 66633aaf-93f5-dd11-bfe8-001ec9ace3ee
+                  geopath_panel_id: 2413
+                  plant_unit_id: CHI0023AB Fx01
+                  structure_id: CHI0023AB
+                  plant_unique_panel_id: '0'
+                  primary_artery: WASHINGTON & LASALLE
+                  cross_artery: LOOP
+                  street_side: SW
+                  facing: E
+                  distance_dir: 2.6 FT E
+                  illumination_hours: 24
+                  lat: 41.883114
+                  lon: -87.632167
+                  height: 45
+                  width: 66
+                  is_digital: false
+                  is_trivision: false
+                  ad_length: 0
+                  ads_in_rotation: 0
+                  county_fips: '17031'
+                  county: null
+                  media_type_id: c51ffe38-b21f-dc11-bb82-00188bc22971
+                  media_type: null
+                  plant_id: 63cf61fd-af8a-4c1f-92b8-d03b6753a100
+                  plant: null
+                  panel_segments: []
+                  markets: []
+                  created_at: '2017-08-24T18:42:07.047583Z'
+                  updated_at: '2017-08-24T18:42:07.047583Z'
+              user_id: auth0|5991e891d43c5e5ff0d7288a
+              company_id: null
+              created_at: '2018-02-09T18:27:19.49016Z'
+              updated_at: '2018-02-09T18:27:19.49016Z'
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '404':
+          description: NotFoundError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+    put:
+      description: Update a panel set.
+      operationId: updatePanelSet
+      tags:
+        - Panel Sets
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: path
+          name: id
+          type: string
+          description: The id of the panel set to update.
+          required: true
+        - in: formData
+          name: name
+          type: string
+          description: The name of the panel set.
+          required: true
+        - in: formData
+          name: description
+          type: string
+          description: Description of the panel set.
+          required: true
+        - in: formData
+          name: panel_ids
+          type: array
+          items:
+            type: string
+          required: true
+          description: The uuids or geopath_panel_ids of the panels in the panel set
+        - in: formData
+          name: audience
+          type: string
+          enum:
+            - user
+            - company
+          description: Who can use this panel set.
+          required: true
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/panel_set'
+          examples:
+            application/json:
+              id: cda2b194-6930-4256-96e4-c475d32e491b
+              name: panel set test updated!
+              description: this is a test panel set
+              panels:
+                - id: 66633aaf-93f5-dd11-bfe8-001ec9ace3ee
+                  geopath_panel_id: 2413
+                  plant_unit_id: CHI0023AB Fx01
+                  structure_id: CHI0023AB
+                  plant_unique_panel_id: '0'
+                  primary_artery: WASHINGTON & LASALLE
+                  cross_artery: LOOP
+                  street_side: SW
+                  facing: E
+                  distance_dir: 2.6 FT E
+                  illumination_hours: 24
+                  lat: 41.883114
+                  lon: -87.632167
+                  height: 45
+                  width: 66
+                  is_digital: false
+                  is_trivision: false
+                  ad_length: 0
+                  ads_in_rotation: 0
+                  county_fips: '17031'
+                  county: null
+                  media_type_id: c51ffe38-b21f-dc11-bb82-00188bc22971
+                  media_type:
+                    id: c51ffe38-b21f-dc11-bb82-00188bc22971
+                    name: Transit Shelters (TSA)
+                    category: Street Furniture
+                    panels: []
+                  plant_id: 63cf61fd-af8a-4c1f-92b8-d03b6753a100
+                  plant:
+                    id: 63cf61fd-af8a-4c1f-92b8-d03b6753a100
+                    name: JCDecaux / Chicago
+                    plant_code: EOG
+                    created_at: '2017-08-24T15:20:16.776271Z'
+                    updated_at: '2017-08-24T15:20:16.776271Z'
+                    operator_id: d6105ba2-7d9f-4264-ae14-548e78c2311e
+                    operator:
+                      id: d6105ba2-7d9f-4264-ae14-548e78c2311e
+                      name: JCDecaux
+                      created_at: '2017-08-24T15:19:27.157985Z'
+                      updated_at: '2017-08-24T15:19:27.157985Z'
+                      plants: []
+                    panels: []
+                  panel_segments: []
+                  markets: []
+                  created_at: '2017-08-24T18:42:07.047583Z'
+                  updated_at: '2017-08-24T18:42:07.047583Z'
+              user_id: auth0|5991e891d43c5e5ff0d7288a
+              company_id: null
+              created_at: '2018-02-09T18:27:19.49016Z'
+              updated_at: '2018-02-09T18:48:57.488454389Z'
+        '400':
+          description: InputInvalid
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+    delete:
+      description: Delete a panel set.
+      operationId: deletePanelSet
+      tags:
+        - Panel Sets
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          type: string
+          description: The id of the panel set to delete.
+          required: true
+      responses:
+        '204':
+          description: ''
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '404':
+          description: NotFoundError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+  /panels:
+    get:
+      operationId: getPanels
+      description: 'Get panels, paginated to the page number with page_len items per page'
+      tags:
+        - Panels
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+        - text/csv
+      parameters:
+        - name: page
+          in: query
+          description: Page number. 0-indexed.
+          type: number
+          format: integer
+          required: true
+        - name: page_len
+          in: query
+          description: Number of items per page. Only used if param page is present
+          type: number
+          format: integer
+          required: true
+        - name: full
+          in: query
+          description: Whether to include all panels or a subset.
+          type: boolean
+          required: false
+        - name: ids
+          in: query
+          description: An optional list of geopath panel ids. In comma-separated CSV format.
+          type: string
+        - name: market_ids
+          in: query
+          description: An optional list of market UUIDs. In comma-separated CSV format.
+          type: string
+        - name: demo_id
+          in: query
+          description: Demo id (UUID). Enables average annual weekly audience measures. Requires market_ids to be present. Currently supports ONLY a single market. IS IGNORED when no market id is present
+          type: string
+        - name: counties
+          in: query
+          description: CSV list of Counties FIPS
+          type: string
+        - name: states
+          in: query
+          description: CSV list of State FIPS
+          type: string
+        - name: order_by
+          in: query
+          description: 'CSV list of Columns to order output by (?order_by=operator+asc,geopath_panel_id+desc) Accepted orderings: geopath_panel_id, operator, structure_id, plant_unit_id, media_type, illumination, facing, plant'
+          type: string
+        - name: filters
+          in: query
+          description: 'CSV list of filter names. one of ([media_type_name, operator_name, plant_unit_id, structure_id, primary_artery, cross_artery, width, min-width, max-width, height, min-height, max-height, min-area, max-area])'
+          type: string
+        - name: media_type_name
+          in: query
+          description: (If listed in filters) CSV list of media type names to filter by
+          type: string
+        - name: operator_name
+          in: query
+          description: (If listed in filters) CSV list of operator names to filter by
+          type: string
+        - name: plant_unit_id
+          in: query
+          description: (If listed in filters) Plant unit id to filter by
+          type: string
+        - name: structure_id
+          in: query
+          description: (If listed in filters) Structure id to filter by
+          type: string
+        - name: primary_artery
+          in: query
+          description: (If listed in filters) Primary artery to filter by
+          type: string
+        - name: cross_artery
+          in: query
+          description: (If listed in filters) Cross artery to filter by
+          type: string
+        - name: width
+          in: query
+          description: (If listed in filters) CSV list of widths to filter by (in inches)
+          type: string
+        - name: height
+          in: query
+          description: (If listed in filters) CSV list of heights to filter by (in inches)
+          type: string
+        - name: min-width
+          in: query
+          description: (If listed in filters) Width min to filter by (in inches)
+          type: number
+        - name: max-width
+          in: query
+          description: (If listed in filters) Width max to filter by (in inches)
+          type: number
+        - name: min-height
+          in: query
+          description: (If listed in filters) Height min to filter by (in inches)
+          type: number
+        - name: max-height
+          in: query
+          description: (If listed in filters) Height max to filter by (in inches)
+          type: number
+        - name: min-area
+          in: query
+          description: (If listed in filters) Area min to filter by (in square inches)
+          type: number
+        - name: max-area
+          in: query
+          description: (If listed in filters) Area max to filter by (in square inches)
+          type: number
+      responses:
+        '200':
+          description: Returns a list of panels matching the provided query paramters.
+          examples:
+            application/json:
+              panel_list:
+                - id: 63633aaf-93f5-dd11-bfe8-001ec9ace3ee
+                  geopath_panel_id: 2410
+                  plant_unit_id: CHI0012AB Fx01
+                  structure_id: CHI0012AB
+                  plant_unique_panel_id: '0'
+                  primary_artery: JACKSON & FRANKLIN
+                  cross_artery: LOOP
+                  street_side: SW
+                  facing: E
+                  distance_dir: 2.6 FT E
+                  illumination_hours: 24
+                  lat: 41.8780833333333
+                  lon: -87.6349583333333
+                  height: 45
+                  width: 66
+                  is_digital: false
+                  is_trivision: false
+                  ad_length: 0
+                  ads_in_rotation: 0
+                  county_fips: '17031'
+                  county: null
+                  media_type_id: c51ffe38-b21f-dc11-bb82-00188bc22971
+                  media_type:
+                    id: c51ffe38-b21f-dc11-bb82-00188bc22971
+                    name: Transit Shelters (TSA)
+                    category: Street Furniture
+                    panels: []
+                  plant_id: 63cf61fd-af8a-4c1f-92b8-d03b6753a100
+                  plant:
+                    id: 63cf61fd-af8a-4c1f-92b8-d03b6753a100
+                    name: JCDecaux / Chicago
+                    plant_code: EOG
+                    created_at: '2017-08-24T15:20:16.776271Z'
+                    updated_at: '2017-08-24T15:20:16.776271Z'
+                    operator_id: d6105ba2-7d9f-4264-ae14-548e78c2311e
+                    operator:
+                      id: d6105ba2-7d9f-4264-ae14-548e78c2311e
+                      name: JCDecaux
+                      created_at: '2017-08-24T15:19:27.157985Z'
+                      updated_at: '2017-08-24T15:19:27.157985Z'
+                      plants: []
+                    panels: []
+                  panel_segments: []
+                  markets: []
+                  created_at: '2017-08-24T18:42:07.047583Z'
+                  updated_at: '2017-08-24T18:42:07.047583Z'
+              page:
+                page: 0
+                total: 60000
+            '[object Object]': null
+        '401':
+          description: Indicates an error with the security token.
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: Indicates an error within the Service
+          schema:
+            $ref: '#/definitions/InsightsError'
+  '/panels/{id}':
+    get:
+      operationId: getPanel
+      description: Get panel with id
+      tags:
+        - Panels
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: geopath panel id OR panel UUID
+          type: string
+          required: true
+      responses:
+        '200':
+          description: ''
+          examples:
+            application/json:
+              id: 68633aaf-93f5-dd11-bfe8-001ec9ace3ee
+              geopath_panel_id: 2416
+              plant_unit_id: CHI0030AB Fx01
+              structure_id: CHI0030AB
+              plant_unique_panel_id: '0'
+              primary_artery: MADISON & WELLS
+              cross_artery: LOOP
+              street_side: NW
+              facing: W
+              distance_dir: 1.5 FT W
+              illumination_hours: 24
+              lat: 41.8819583333333
+              lon: -87.6346666666667
+              height: 45
+              width: 66
+              is_digital: false
+              is_trivision: false
+              ad_length: 0
+              ads_in_rotation: 0
+              county_fips: '17031'
+              county: null
+              media_type_id: c51ffe38-b21f-dc11-bb82-00188bc22971
+              media_type:
+                id: c51ffe38-b21f-dc11-bb82-00188bc22971
+                name: Transit Shelters (TSA)
+                category: Street Furniture
+                panels: []
+              plant_id: 63cf61fd-af8a-4c1f-92b8-d03b6753a100
+              plant:
+                id: 63cf61fd-af8a-4c1f-92b8-d03b6753a100
+                name: JCDecaux / Chicago
+                plant_code: EOG
+                created_at: '2017-08-24T15:20:16.776271Z'
+                updated_at: '2017-08-24T15:20:16.776271Z'
+                operator_id: d6105ba2-7d9f-4264-ae14-548e78c2311e
+                operator:
+                  id: d6105ba2-7d9f-4264-ae14-548e78c2311e
+                  name: JCDecaux
+                  created_at: '2017-08-24T15:19:27.157985Z'
+                  updated_at: '2017-08-24T15:19:27.157985Z'
+                  plants: []
+                panels: []
+              panel_segments: []
+              markets: []
+              created_at: '2017-08-24T18:42:07.047583Z'
+              updated_at: '2017-08-24T18:42:07.047583Z'
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+  /panels/nearby:
+    get:
+      description: Get all panels within a certain distance of a point.
+      operationId: getNearbyPanels
+      tags:
+        - Panels
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: lat
+          type: number
+          format: float
+          description: Latitude
+        - in: query
+          name: lon
+          type: number
+          format: float
+          description: Longitude
+        - in: query
+          name: radius
+          type: number
+          format: float
+          description: Radius of search (in meters)
+      responses:
+        '200':
+          description: ''
+          examples:
+            application/json:
+              - id: 68633aaf-93f5-dd11-bfe8-001ec9ace3ee
+                geopath_panel_id: 2416
+                plant_unit_id: CHI0030AB Fx01
+                structure_id: CHI0030AB
+                plant_unique_panel_id: '0'
+                primary_artery: MADISON & WELLS
+                cross_artery: LOOP
+                street_side: NW
+                facing: W
+                distance_dir: 1.5 FT W
+                illumination_hours: 24
+                lat: 41.8819583333333
+                lon: -87.6346666666667
+                height: 45
+                width: 66
+                is_digital: false
+                is_trivision: false
+                ad_length: 0
+                ads_in_rotation: 0
+                county_fips: '17031'
+                county: null
+                media_type_id: c51ffe38-b21f-dc11-bb82-00188bc22971
+                media_type:
+                  id: c51ffe38-b21f-dc11-bb82-00188bc22971
+                  name: Transit Shelters (TSA)
+                  category: Street Furniture
+                  panels: []
+                plant_id: 63cf61fd-af8a-4c1f-92b8-d03b6753a100
+                plant:
+                  id: 63cf61fd-af8a-4c1f-92b8-d03b6753a100
+                  name: JCDecaux / Chicago
+                  plant_code: EOG
+                  created_at: '2017-08-24T15:20:16.776271Z'
+                  updated_at: '2017-08-24T15:20:16.776271Z'
+                  operator_id: d6105ba2-7d9f-4264-ae14-548e78c2311e
+                  operator:
+                    id: d6105ba2-7d9f-4264-ae14-548e78c2311e
+                    name: JCDecaux
+                    created_at: '2017-08-24T15:19:27.157985Z'
+                    updated_at: '2017-08-24T15:19:27.157985Z'
+                    plants: []
+                  panels: []
+                panel_segments: []
+                markets: []
+                created_at: '2017-08-24T18:42:07.047583Z'
+                updated_at: '2017-08-24T18:42:07.047583Z'
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+  /password-reset:
+    post:
+      description: Send a password reset email. Endpoint returns correctly even if the user is not currently registered.
+      tags:
+        - Authentication
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: email
+          type: string
+          description: Email of the person resetting their password.
+          required: true
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Input Invalid
+          schema:
+            $ref: '#/definitions/InsightsError'
+  /plants:
+    get:
+      description: Get all plant
+      operationId: getPlants
+      tags:
+        - Plants
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/plant'
+          examples:
+            application/json:
+              - id: 5ca72fa9-3e3d-4ff7-ae67-000196c90bc1
+                name: 'Adams / Charlotte, NC'
+                plant_code: '882'
+                created_at: '2017-08-24T15:20:16.776271Z'
+                updated_at: '2017-08-24T15:20:16.776271Z'
+                operator_id: 2e75ba3a-027c-4136-ac74-cb89a7da5ab6
+                operator: null
+                panels: []
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+  '/plants/{id}':
+    get:
+      description: Get a single plant
+      tags:
+        - Plants
+      operationId: getPlant
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          type: string
+          description: The ID of the plant.
+          required: true
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/plant'
+          examples:
+            application/json:
+              id: 5ca72fa9-3e3d-4ff7-ae67-000196c90bc1
+              name: 'Adams / Charlotte, NC'
+              plant_code: '882'
+              created_at: '2017-08-24T15:20:16.776271Z'
+              updated_at: '2017-08-24T15:20:16.776271Z'
+              operator_id: 2e75ba3a-027c-4136-ac74-cb89a7da5ab6
+              operator: null
+              panels: []
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '404':
+          description: NotFoundError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+  '/states/{fips}':
+    get:
+      description: Get a single state
+      operationId: getState
+      tags:
+        - States
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: fips
+          type: string
+          description: The FIPS of the state to get.
+          required: true
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/state'
+          examples:
+            application/json:
+              fips: '06'
+              name: California
+              zip_codes: []
+              counties: []
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '404':
+          description: NotFoundError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+  /states:
+    get:
+      description: Get all states
+      tags:
+        - States
+      operationId: getStates
+      security:
+        - geo_insights_auth:
+            - 'read:api'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/state'
+          examples:
+            application/json:
+              - fips: '06'
+                name: California
+                zip_codes: []
+                counties: []
+        '401':
+          description: TokenError
+          schema:
+            $ref: '#/definitions/InsightsError'
+        '500':
+          description: ServerError
+          schema:
+            $ref: '#/definitions/InsightsError'
+produces:
+  - application/json
+consumes:
+  - application/x-www-form-urlencoded
+schemes:
+  - https
+host: insights-api.geopath.org
+securityDefinitions:
+  geo_insights_auth:
+    type: oauth2
+    flow: password
+    tokenUrl: 'https://<base.path>/login'
+    scopes:
+      'read:api': read api
+definitions:
+  InsightsError:
+    properties:
+      reason:
+        type: string
+      name:
+        type: string
+      message:
+        type: string
+  daypart:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      description:
+        type: string
+      start_hour:
+        type: integer
+      end_hour:
+        type: integer
+      days:
+        type: array
+        items:
+          type: integer
+      user_id:
+        type: string
+      company_id:
+        type: string
+      create_at:
+        type: string
+        format: date
+      updated_at:
+        type: string
+        format: date
+  panel:
+    properties:
+      id:
+        type: string
+      geopath_panel_id:
+        type: integer
+      plant_unit_id:
+        type: string
+      structure_id:
+        type: string
+      plant_unique_panel_id:
+        type: string
+      primary_artery:
+        type: string
+      cross_artery:
+        type: string
+      street_side:
+        type: string
+      facing:
+        type: string
+      distance_dir:
+        type: string
+      illumination_hours:
+        type: integer
+      lat:
+        type: number
+        format: float
+      lon:
+        type: number
+        format: float
+      height:
+        type: integer
+      width:
+        type: integer
+      is_digital:
+        type: boolean
+      is_trivision:
+        type: boolean
+      ad_length:
+        type: integer
+      ads_in_rotation:
+        type: integer
+      county_fips:
+        type: string
+      county:
+        $ref: '#/definitions/county'
+      media_type_id:
+        type: string
+      media_type:
+        $ref: '#/definitions/media_type'
+      plant_id:
+        type: string
+      plant:
+        $ref: '#/definitions/plant'
+      panel_segments:
+        type: array
+        items:
+          $ref: '#/definitions/panel_segment'
+      markets:
+        type: array
+        items:
+          $ref: '#/definitions/market'
+      created_at:
+        type: string
+        format: date
+      updated_at:
+        type: string
+        format: date
+  county:
+    properties:
+      fips:
+        type: string
+      name:
+        type: string
+      state_fips:
+        type: string
+      state:
+        $ref: '#/definitions/state'
+      census_tracts:
+        type: array
+        items:
+          $ref: '#/definitions/census_tract'
+      panels:
+        type: array
+        items:
+          $ref: '#/definitions/panel'
+      markets:
+        type: array
+        items:
+          $ref: '#/definitions/market'
+  state:
+    properties:
+      fips:
+        type: string
+      name:
+        type: string
+      zip_codes:
+        type: array
+        items:
+          $ref: '#/definitions/zipcode'
+      counties:
+        type: array
+        items:
+          $ref: '#/definitions/county'
+  zipcode:
+    properties:
+      zip_code:
+        type: string
+      name:
+        type: string
+      state:
+        $ref: '#/definitions/state'
+      state_fips:
+        type: string
+      markets:
+        type: array
+        items:
+          $ref: '#/definitions/market'
+  census_tract:
+    properties:
+      fips:
+        type: string
+      county_fips:
+        type: string
+      county:
+        $ref: '#/definitions/county'
+      block_groups:
+        type: array
+        items:
+          $ref: '#/definitions/blockgroup'
+      markets:
+        type: array
+        items:
+          $ref: '#/definitions/market'
+  blockgroup:
+    properties:
+      fips:
+        type: string
+      census_tract_fips:
+        type: string
+      census_tract:
+        $ref: '#/definitions/census_tract'
+  media_type:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      category:
+        type: string
+      panels:
+        type: array
+        items:
+          $ref: '#/definitions/panel'
+  plant:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      plant_code:
+        type: string
+      created_at:
+        type: string
+        format: date
+      updated_at:
+        type: string
+        format: date
+      operator_id:
+        type: string
+      operator:
+        $ref: '#/definitions/operator'
+      panels:
+        type: array
+        items:
+          $ref: '#/definitions/panel'
+  operator:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      created_at:
+        type: string
+        format: date
+      updated_at:
+        type: string
+        format: date
+      plants:
+        type: array
+        items:
+          $ref: '#/definitions/plant'
+  panel_segment:
+    properties:
+      panel_id:
+        type: string
+      segment_id:
+        type: string
+      panels:
+        type: array
+        items:
+          $ref: '#/definitions/panel'
+  market:
+    properties:
+      id:
+        type: string
+      source_market_id:
+        type: string
+      name:
+        type: string
+      type:
+        type: string
+      market_type:
+        $ref: '#/definitions/market_type'
+      location_id:
+        type: string
+      location:
+        $ref: '#/definitions/location'
+      created_at:
+        type: string
+        format: date
+      updated_at:
+        type: string
+        format: date
+      panels:
+        type: array
+        items:
+          $ref: '#/definitions/panel'
+      counties:
+        type: array
+        items:
+          $ref: '#/definitions/county'
+      census_tracts:
+        type: array
+        items:
+          $ref: '#/definitions/census_tract'
+      zip_codes:
+        type: array
+        items:
+          $ref: '#/definitions/zipcode'
+  market_type:
+    properties:
+      type:
+        type: string
+      markets:
+        type: array
+        items:
+          $ref: '#/definitions/market'
+  location:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      lat:
+        type: number
+        format: float
+      lon:
+        type: number
+        format: float
+      created_at:
+        type: string
+        format: date
+      updated_at:
+        type: string
+        format: date
+      markets:
+        type: array
+        items:
+          $ref: '#/definitions/market'
+  demo:
+    properties:
+      id:
+        type: string
+      source_demo_id:
+        type: string
+      name:
+        type: string
+      description:
+        type: string
+      percent_base:
+        type: string
+      true_percent_base:
+        type: string
+      year:
+        type: integer
+      demo_subcategory_id:
+        type: string
+      demo_subcategory:
+        $ref: '#/definitions/demo_subcategory'
+  demo_subcategory:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      demo_category_id:
+        type: string
+      demo_category:
+        $ref: '#/definitions/demo_category'
+      demos:
+        type: array
+        items:
+          $ref: '#/definitions/demo'
+  demo_category:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      description:
+        type: string
+      demo_category_types:
+        type: array
+        items:
+          $ref: '#/definitions/demo_category_type'
+      demo_subcategories:
+        type: array
+        items:
+          $ref: '#/definitions/demo_subcategory'
+  demo_category_type:
+    properties:
+      type:
+        type: string
+      demo_categories:
+        type: array
+        items:
+          $ref: '#/definitions/demo_category'
+  custom_demo:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      age_min:
+        type: integer
+      age_max:
+        type: integer
+      hhinc_min:
+        type: integer
+      hhinc_max:
+        type: integer
+      races:
+        type: array
+        items:
+          type: string
+      sex:
+        type: string
+      employed:
+        type: boolean
+      user_id:
+        type: string
+      company_id:
+        type: string
+  measure:
+    properties:
+      demo_id:
+        type: string
+      custom_demo_id:
+        type: string
+      panel_id:
+        type: string
+      daypart_id:
+        type: string
+      composition_percentage:
+        type: number
+        format: float
+      composition_index:
+        type: number
+        format: float
+      ad_play_in_market_impressions:
+        type: number
+        format: float
+      structure_in_market_impressions:
+        type: number
+        format: float
+      ad_play_total_impressions:
+        type: number
+        format: float
+      structure_total_impressions:
+        type: number
+        format: float
+      ad_play_in_market_ratings:
+        type: number
+        format: float
+      structure_in_market_ratings:
+        type: number
+        format: float
+      demographic_population:
+        type: number
+        format: float
+  custom_market:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      market_type:
+        type: string
+      location_id:
+        type: string
+      location:
+        $ref: '#/definitions/location'
+      value:
+        type: string
+      user_id:
+        type: string
+      company_id:
+        type: string
+      created_at:
+        type: string
+        format: date
+      updated_at:
+        type: string
+        format: date
+  panel_set:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      description:
+        type: string
+      panels:
+        type: array
+        items:
+          $ref: '#/definitions/panel'
+      user_id:
+        type: string
+      company_id:
+        type: string
+      created_at:
+        type: string
+        format: date
+      updated_at:
+        type: string
+        format: date
+
+
